@@ -11,13 +11,19 @@
             const rand_bytes = crypto.getRandomValues(new Uint8Array(32));
             const hash_buf = await crypto.subtle.digest('SHA-256', rand_bytes);
             const hash_arr = Array.from(new Uint8Array(hash_buf));
-            const hash_hex = hash_arr.map(b => b.toString(16).padStart(2, '0')).join('');
-            return hash_hex;
+            return hash_arr.map(b => b.toString(16).padStart(2, '0')).join('');
         }
 
-        gen_key().then(key => {
-            document.getElementById('key').textContent = key;
-        });
+        const params = new URLSearchParams(window.location.search);
+        const linkvertise_ok = params.has('linkvertise') && params.get('1') === 'true';
+
+        if (linkvertise_ok) {
+            gen_key().then(key => {
+                document.getElementById('key').textContent = key;
+            });
+        } else {
+            document.getElementById('key').textContent = "Don't bypass";
+        }
     </script>
 </body>
 </html>
