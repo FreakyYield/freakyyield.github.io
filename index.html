@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>key</title>
+</head>
+<body>
+    <div id="hash"></div>
+
+    <script>
+        function getkey() {
+            return Math.random().toString(36).substring(2, 10);
+        }
+        const hash = getkey();
+        document.getElementById('hash').textContent = `#${hash}`;
+    </script>
+</body>
+</html>
