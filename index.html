@@ -1,17 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>key</title>
+    <title></title>
 </head>
 <body>
-    <div id="hash"></div>
+    <div id="key"></div>
 
     <script>
-        function getkey() {
-            return Math.random().toString(36).substring(2, 10);
+        async function gen_key() {
+            const rand_bytes = crypto.getRandomValues(new Uint8Array(32));
+            const hash_buf = await crypto.subtle.digest('SHA-256', rand_bytes);
+            const hash_arr = Array.from(new Uint8Array(hash_buf));
+            const hash_hex = hash_arr.map(b => b.toString(16).padStart(2, '0')).join('');
+            return hash_hex;
         }
-        const hash = getkey();
-        document.getElementById('hash').textContent = `#${hash}`;
+
+        gen_key().then(key => {
+            document.getElementById('key').textContent = key;
+        });
     </script>
 </body>
 </html>
